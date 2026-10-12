@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_atf_step">
+    <sys_atf_step action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <callable_outputs/>
+        <copied_from/>
+        <description/>
+        <display_name>Run Server Side Script</display_name>
+        <inputs/>
+        <mugshots_cache_json/>
+        <notes/>
+        <order>1</order>
+        <step_config display_value="Run Server Side Script">41de4a935332120028bc29cac2dc349a</step_config>
+        <sys_class_name>sys_atf_step</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:11:38</sys_created_on>
+        <sys_id>50c6c20c6b5c407db5fbf2994953c87a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Run Server Side Script</sys_name>
+        <sys_package display_value="DayOne ReadyOps AI" source="x_1919740_dayone_0">0df3b17a93b383d441a0f01bdd03d6c4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_update_name>sys_atf_step_50c6c20c6b5c407db5fbf2994953c87a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:11:38</sys_updated_on>
+        <table/>
+        <test display_value="T-09 Gate Passes When All Mandatory Verified">681e3a53b2d0490da79fa4cea995e251</test>
+        <timeout/>
+        <warning_message/>
+    </sys_atf_step>
+    <sys_variable_value action="delete_multiple" query="document_key=50c6c20c6b5c407db5fbf2994953c87a"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>50c6c20c6b5c407db5fbf2994953c87a</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 04:46:45</sys_created_on>
+        <sys_id>28526d20e4b743d6ad8b30c3ad3b84b5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 04:46:45</sys_updated_on>
+        <value>3.1</value>
+        <variable display_value="Jasmine version">42f2564b73031300440211d8faf6a777</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>50c6c20c6b5c407db5fbf2994953c87a</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 04:46:45</sys_created_on>
+        <sys_id>4e274a26770d4fda901dc22341a80566</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 04:46:45</sys_updated_on>
+        <value>
+(function() {
+    var planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+    planGr.initialize();
+    planGr.setValue('employee_name', 'ATF Gate Pass');
+    planGr.setValue('employee_id', 'ATF-009');
+    planGr.setValue('state', 'active');
+    planGr.setValue('readiness_threshold', 100);
+    var planId = planGr.insert();
+
+    for (var i = 1; i &lt;= 2; i++) {
+        var t = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+        t.initialize();
+        t.setValue('plan', planId);
+        t.setValue('task_name', 'Mandatory Task ' + i);
+        t.setValue('mandatory', true);
+        t.setValue('task_state', 'complete');
+        t.setValue('evidence_verified', true);
+        t.setValue('department', 'hr');
+        t.insert();
+    }
+
+    var optTask = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+    optTask.initialize();
+    optTask.setValue('plan', planId);
+    optTask.setValue('task_name', 'Optional Complete');
+    optTask.setValue('mandatory', false);
+    optTask.setValue('task_state', 'complete');
+    optTask.setValue('evidence_verified', true);
+    optTask.setValue('department', 'facilities');
+    optTask.insert();
+
+    var gate = new DayOneGateValidator(planId);
+    var result = gate.validateGate();
+    if (!result.passed) throw new Error('Gate should pass but failed: ' + result.reasons.join('; '));
+    gs.info('T-09 PASSED: Gate correctly passed with all mandatory tasks verified');
+})();
+</value>
+        <variable display_value="Test script">989d9e235324220002c6435723dc3484</variable>
+    </sys_variable_value>
+</record_update>

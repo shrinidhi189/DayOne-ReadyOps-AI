@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="e8c2bee68a6c4e2d803f784fe28ce128" label="Task Template" name="x_1919740_dayone_0_task_template" type="collection">
+        <element default="true" label="Active" name="active" type="boolean"/>
+        <element default="*" label="Applies to Locations" max_length="4000" name="applies_to_locations" type="string"/>
+        <element default="*" label="Applies to Roles" max_length="4000" name="applies_to_roles" type="string"/>
+        <element label="Department" name="department" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Finance" sequence="5" value="finance"/>
+                <element inactive_on_update="false" label="Security" sequence="3" value="security"/>
+                <element inactive_on_update="false" label="IT" sequence="2" value="it"/>
+                <element inactive_on_update="false" label="HR" sequence="1" value="hr"/>
+                <element inactive_on_update="false" label="Hiring Manager" sequence="6" value="hiring_manager"/>
+                <element inactive_on_update="false" label="Facilities" sequence="4" value="facilities"/>
+            </choice>
+        </element>
+        <element display="true" label="Template Name" mandatory="true" max_length="200" name="template_name" type="string"/>
+        <element default="5" label="Est. Days to Complete" name="est_days_to_complete" type="integer"/>
+        <element label="Mandatory" name="mandatory" type="boolean"/>
+        <element label="Description" max_length="4000" name="description" type="multi_two_lines"/>
+    </element>
+</database>

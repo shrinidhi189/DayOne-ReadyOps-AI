@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="90541d6b4cff4ddd9623ccfc672b9cf7" label="Onboarding Plan" name="x_1919740_dayone_0_onboarding_plan" type="collection">
+        <element default="0" label="Readiness Score (%)" name="readiness_score" type="integer"/>
+        <element label="Joining Date" name="joining_date" type="glide_date"/>
+        <element default="javascript:getNextObjNumberPadded();" label="Number" name="number" type="string"/>
+        <element label="Employee ID" max_length="40" name="employee_id" type="string"/>
+        <element label="Role" max_length="100" name="role" type="string"/>
+        <element label="Coordinator" name="coordinator" reference="sys_user" type="reference"/>
+        <element default="on_track" label="Readiness Status" name="readiness_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="At Risk" sequence="2" value="at_risk"/>
+                <element inactive_on_update="false" label="On Track" sequence="1" value="on_track"/>
+                <element inactive_on_update="false" label="Ready" sequence="4" value="ready"/>
+                <element inactive_on_update="false" label="Blocked" sequence="3" value="blocked"/>
+            </choice>
+        </element>
+        <element label="Manager" name="manager" reference="sys_user" type="reference"/>
+        <element default="on_track" label="Forecast Status" name="forecast_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="On Track" sequence="1" value="on_track"/>
+                <element inactive_on_update="false" label="Delay Forecast" sequence="2" value="delay_forecast"/>
+                <element inactive_on_update="false" label="No Joining Date" sequence="4" value="no_joining_date"/>
+                <element inactive_on_update="false" label="Delayed" sequence="3" value="delayed"/>
+            </choice>
+        </element>
+        <element label="Location" max_length="100" name="location" type="string"/>
+        <element display="true" label="Employee Name" mandatory="true" max_length="100" name="employee_name" type="string"/>
+        <element default="draft" label="State" name="state" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Draft" sequence="1" value="draft"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="4" value="cancelled"/>
+                <element inactive_on_update="false" label="Active" sequence="2" value="active"/>
+                <element inactive_on_update="false" label="Completed" sequence="3" value="completed"/>
+            </choice>
+        </element>
+        <element label="Notes" max_length="4000" name="notes" type="multi_two_lines"/>
+        <element label="Department" name="department" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Security" sequence="3" value="security"/>
+                <element inactive_on_update="false" label="Engineering" sequence="6" value="engineering"/>
+                <element inactive_on_update="false" label="Facilities" sequence="4" value="facilities"/>
+                <element inactive_on_update="false" label="IT" sequence="2" value="it"/>
+                <element inactive_on_update="false" label="Operations" sequence="7" value="operations"/>
+                <element inactive_on_update="false" label="Finance" sequence="5" value="finance"/>
+                <element inactive_on_update="false" label="HR" sequence="1" value="hr"/>
+            </choice>
+        </element>
+        <element default="100" label="Readiness Threshold (%)" name="readiness_threshold" type="integer"/>
+        <index name="index">
+            <element name="coordinator"/>
+        </index>
+        <index name="index2">
+            <element name="manager"/>
+        </index>
+    </element>
+</database>

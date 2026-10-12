@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_atf_step">
+    <sys_atf_step action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <callable_outputs/>
+        <copied_from/>
+        <description/>
+        <display_name>Run Server Side Script</display_name>
+        <inputs/>
+        <mugshots_cache_json/>
+        <notes/>
+        <order>4</order>
+        <step_config display_value="Run Server Side Script">41de4a935332120028bc29cac2dc349a</step_config>
+        <sys_class_name>sys_atf_step</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:11:19</sys_created_on>
+        <sys_id>486862afa9cf491681f96b3d61469555</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Run Server Side Script</sys_name>
+        <sys_package display_value="DayOne ReadyOps AI" source="x_1919740_dayone_0">0df3b17a93b383d441a0f01bdd03d6c4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_update_name>sys_atf_step_486862afa9cf491681f96b3d61469555</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:11:19</sys_updated_on>
+        <table/>
+        <test display_value="T-05 Not Applicable Tasks Excluded from Scoring">98cb2b585c474831b472a9413533605b</test>
+        <timeout/>
+        <warning_message/>
+    </sys_atf_step>
+    <sys_variable_value action="delete_multiple" query="document_key=486862afa9cf491681f96b3d61469555"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>486862afa9cf491681f96b3d61469555</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 04:46:34</sys_created_on>
+        <sys_id>a6852905b921453bb0aa3684dfab8af8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 04:46:34</sys_updated_on>
+        <value>
+(function() {
+    var engine = new DayOneReadinessEngine('{{step['35e1496b253d4f39a426d58fff7e91f5'].record_id}}');
+    var score = engine.calculateScore();
+    if (score !== 100) throw new Error('Score should be 100 (NA excluded), got ' + score);
+    gs.info('T-05 PASSED: Not Applicable task excluded, score = ' + score);
+})();
+</value>
+        <variable display_value="Test script">989d9e235324220002c6435723dc3484</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>486862afa9cf491681f96b3d61469555</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 04:46:34</sys_created_on>
+        <sys_id>d58399e6caec4df791c0e7afef8eab50</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 04:46:34</sys_updated_on>
+        <value>3.1</value>
+        <variable display_value="Jasmine version">42f2564b73031300440211d8faf6a777</variable>
+    </sys_variable_value>
+</record_update>

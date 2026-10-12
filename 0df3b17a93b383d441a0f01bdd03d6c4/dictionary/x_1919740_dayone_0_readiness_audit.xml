@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="7c0b36e4fb5f43a4855b55f7de46ed16" label="Readiness Audit Log" name="x_1919740_dayone_0_readiness_audit" read_only="true" read_only_option="instance_configured" type="collection">
+        <element label="New Status" max_length="40" name="new_status" type="string"/>
+        <element label="Performed By" name="performed_by" reference="sys_user" type="reference"/>
+        <element label="Score at Event" name="score" type="integer"/>
+        <element label="Onboarding Plan" mandatory="true" name="plan" reference="x_1919740_dayone_0_onboarding_plan" type="reference"/>
+        <element label="Previous Status" max_length="40" name="previous_status" type="string"/>
+        <element label="Details" max_length="4000" name="details" type="multi_two_lines"/>
+        <element display="true" label="Event Type" name="event_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Gate Checked" sequence="3" value="gate_checked"/>
+                <element inactive_on_update="false" label="Status Changed" sequence="2" value="status_changed"/>
+                <element inactive_on_update="false" label="Gate Blocked" sequence="5" value="gate_blocked"/>
+                <element inactive_on_update="false" label="Gate Passed" sequence="4" value="gate_passed"/>
+                <element inactive_on_update="false" label="Score Recalculated" sequence="1" value="score_recalculated"/>
+                <element inactive_on_update="false" label="Recovery Action" sequence="7" value="recovery_action"/>
+                <element inactive_on_update="false" label="Evidence Verified" sequence="6" value="evidence_verified"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="performed_by"/>
+        </index>
+        <index name="index2">
+            <element name="plan"/>
+        </index>
+    </element>
+</database>

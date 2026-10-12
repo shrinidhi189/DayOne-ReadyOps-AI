@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="details" label="Details" language="en" table="x_1919740_dayone_0_readiness_audit">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>details</element>
+            <help/>
+            <hint/>
+            <label>Details</label>
+            <language>en</language>
+            <name>x_1919740_dayone_0_readiness_audit</name>
+            <plural>Details</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-10-12 02:15:00</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Details</sys_name>
+            <sys_package display_value="DayOne ReadyOps AI" source="x_1919740_dayone_0">0df3b17a93b383d441a0f01bdd03d6c4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+            <sys_update_name>sys_documentation_x_1919740_dayone_0_readiness_audit_details_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-10-12 02:15:00</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

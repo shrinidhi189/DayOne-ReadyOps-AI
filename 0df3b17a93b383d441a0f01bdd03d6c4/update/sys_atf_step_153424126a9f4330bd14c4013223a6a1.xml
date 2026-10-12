@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_atf_step">
+    <sys_atf_step action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <callable_outputs/>
+        <copied_from/>
+        <description/>
+        <display_name>Run Server Side Script</display_name>
+        <inputs/>
+        <mugshots_cache_json/>
+        <notes/>
+        <order>1</order>
+        <step_config display_value="Run Server Side Script">41de4a935332120028bc29cac2dc349a</step_config>
+        <sys_class_name>sys_atf_step</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:11:15</sys_created_on>
+        <sys_id>153424126a9f4330bd14c4013223a6a1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Run Server Side Script</sys_name>
+        <sys_package display_value="DayOne ReadyOps AI" source="x_1919740_dayone_0">0df3b17a93b383d441a0f01bdd03d6c4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_update_name>sys_atf_step_153424126a9f4330bd14c4013223a6a1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:11:15</sys_updated_on>
+        <table/>
+        <test display_value="T-14 Recovery Reassessment Updates Forecast">a423482af02649799d08d849588fe0d1</test>
+        <timeout/>
+        <warning_message/>
+    </sys_atf_step>
+    <sys_variable_value action="delete_multiple" query="document_key=153424126a9f4330bd14c4013223a6a1"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>153424126a9f4330bd14c4013223a6a1</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 04:46:17</sys_created_on>
+        <sys_id>5b57802ad2014e61afa682bc89051a79</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 04:46:17</sys_updated_on>
+        <value>3.1</value>
+        <variable display_value="Jasmine version">42f2564b73031300440211d8faf6a777</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>153424126a9f4330bd14c4013223a6a1</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 04:46:17</sys_created_on>
+        <sys_id>8d6e36e41ba541c6b37f3faa57d4176e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 04:46:17</sys_updated_on>
+        <value>
+(function() {
+    var tomorrow = new GlideDateTime();
+    tomorrow.addDaysLocalTime(1);
+
+    var planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+    planGr.initialize();
+    planGr.setValue('employee_name', 'ATF Recovery Reassess');
+    planGr.setValue('employee_id', 'ATF-014');
+    planGr.setValue('state', 'active');
+    planGr.setValue('joining_date', tomorrow.getValue().split(' ')[0]);
+    planGr.setValue('readiness_threshold', 100);
+    var planId = planGr.insert();
+
+    // Overdue mandatory task
+    var taskGr = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+    taskGr.initialize();
+    taskGr.setValue('plan', planId);
+    taskGr.setValue('task_name', 'Overdue Mandatory');
+    taskGr.setValue('mandatory', true);
+    taskGr.setValue('task_state', 'open');
+    taskGr.setValue('est_remaining_days', 15);
+    taskGr.setValue('department', 'security');
+    var taskId = taskGr.insert();
+
+    var engine = new DayOneReadinessEngine(planId);
+    engine.recalculate();
+
+    planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+    planGr.get(planId);
+    var forecast = planGr.getValue('forecast_status');
+    if (forecast !== 'delayed') throw new Error('Expected delayed forecast, got ' + forecast);
+
+    // Now complete the task (simulate recovery)
+    taskGr = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+    taskGr.get(taskId);
+    taskGr.setValue('task_state', 'complete');
+    taskGr.setValue('evidence_verified', true);
+    taskGr.setValue('est_remaining_days', 0);
+    taskGr.update();
+
+    engine.recalculate();
+
+    planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+    planGr.get(planId);
+    var newForecast = planGr.getValue('forecast_status');
+    if (newForecast === 'delayed') throw new Error('Forecast should no longer be delayed after recovery');
+    gs.info('T-14 PASSED: Forecast updated after recovery from ' + forecast + ' to ' + newForecast);
+})();
+</value>
+        <variable display_value="Test script">989d9e235324220002c6435723dc3484</variable>
+    </sys_variable_value>
+</record_update>

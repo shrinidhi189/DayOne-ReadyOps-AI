@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_1919740_dayone_0.DayOneReadinessAjax</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>GlideAjax processor providing client-callable methods for querying plans, plan details, recalculating readiness, and triggering recovery.</description>
+        <mobile_callable>false</mobile_callable>
+        <name>DayOneReadinessAjax</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var DayOneReadinessAjax = Class.create();
+DayOneReadinessAjax.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+    getPlans: function() {
+        var stateFilter = this.getParameter('sysparm_state');
+        var gr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+
+        if (stateFilter) {
+            gr.addQuery('state', stateFilter);
+        }
+
+        gr.query();
+
+        var plans = [];
+        while (gr.next()) {
+            plans.push({
+                sys_id: gr.getUniqueValue(),
+                number: gr.getValue('number'),
+                employee_name: gr.getValue('employee_name'),
+                employee_id: gr.getValue('employee_id'),
+                role: gr.getValue('role'),
+                department: gr.getValue('department'),
+                location: gr.getValue('location'),
+                joining_date: gr.getValue('joining_date'),
+                readiness_score: gr.getValue('readiness_score'),
+                readiness_status: gr.getValue('readiness_status'),
+                forecast_status: gr.getValue('forecast_status'),
+                state: gr.getValue('state')
+            });
+        }
+
+        return JSON.stringify(plans);
+    },
+
+    getPlanDetails: function() {
+        var planId = this.getParameter('sysparm_plan_id');
+        var planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+
+        if (!planGr.get(planId)) {
+            return JSON.stringify({ error: 'Plan not found' });
+        }
+
+        var plan = {
+            sys_id: planGr.getUniqueValue(),
+            number: planGr.getValue('number'),
+            employee_name: planGr.getValue('employee_name'),
+            employee_id: planGr.getValue('employee_id'),
+            role: planGr.getValue('role'),
+            department: planGr.getValue('department'),
+            location: planGr.getValue('location'),
+            joining_date: planGr.getValue('joining_date'),
+            manager: planGr.getValue('manager'),
+            coordinator: planGr.getValue('coordinator'),
+            readiness_score: planGr.getValue('readiness_score'),
+            readiness_status: planGr.getValue('readiness_status'),
+            forecast_status: planGr.getValue('forecast_status'),
+            readiness_threshold: planGr.getValue('readiness_threshold'),
+            state: planGr.getValue('state'),
+            notes: planGr.getValue('notes'),
+            tasks: []
+        };
+
+        var taskGr = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+        taskGr.addQuery('plan', planId);
+        taskGr.query();
+
+        while (taskGr.next()) {
+            plan.tasks.push({
+                sys_id: taskGr.getUniqueValue(),
+                task_name: taskGr.getValue('task_name'),
+                department: taskGr.getValue('department'),
+                mandatory: taskGr.getValue('mandatory'),
+                due_date: taskGr.getValue('due_date'),
+                est_remaining_days: taskGr.getValue('est_remaining_days'),
+                task_state: taskGr.getValue('task_state'),
+                evidence_verified: taskGr.getValue('evidence_verified'),
+                assigned_to: taskGr.getValue('assigned_to'),
+                description: taskGr.getValue('description')
+            });
+        }
+
+        return JSON.stringify(plan);
+    },
+
+    recalculateReadiness: function() {
+        var planId = this.getParameter('sysparm_plan_id');
+        var engine = new DayOneReadinessEngine(planId);
+        engine.recalculate();
+
+        // Return updated plan data
+        var planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+        if (planGr.get(planId)) {
+            return JSON.stringify({
+                sys_id: planGr.getUniqueValue(),
+                readiness_score: planGr.getValue('readiness_score'),
+                readiness_status: planGr.getValue('readiness_status'),
+                forecast_status: planGr.getValue('forecast_status')
+            });
+        }
+
+        return JSON.stringify({ error: 'Plan not found after recalculation' });
+    },
+
+    triggerRecovery: function() {
+        var planId = this.getParameter('sysparm_plan_id');
+        var planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+
+        if (planGr.get(planId)) {
+            planGr.setValue('readiness_status', 'blocked');
+            planGr.update();
+            return JSON.stringify({ success: true, message: 'Recovery triggered for plan ' + planId });
+        }
+
+        return JSON.stringify({ success: false, message: 'Plan not found' });
+    },
+
+    type: 'DayOneReadinessAjax'
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:20:49</sys_created_on>
+        <sys_id>8e45b50848a8487e8d278a9aae1ddef5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>DayOneReadinessAjax</sys_name>
+        <sys_package display_value="DayOne ReadyOps AI" source="x_1919740_dayone_0">0df3b17a93b383d441a0f01bdd03d6c4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_update_name>sys_script_include_8e45b50848a8487e8d278a9aae1ddef5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:20:49</sys_updated_on>
+    </sys_script_include>
+</record_update>
