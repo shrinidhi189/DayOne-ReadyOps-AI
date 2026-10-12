@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1919740_dayone_0.DayOneReadinessEngine</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Calculates readiness scores and classifies onboarding plan status based on task completion and evidence verification.</description>
+        <mobile_callable>false</mobile_callable>
+        <name>DayOneReadinessEngine</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var DayOneReadinessEngine = Class.create();
+DayOneReadinessEngine.prototype = {
+    initialize: function(planSysId) {
+        this.planSysId = planSysId;
+    },
+
+    calculateScore: function() {
+        var gr = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+        gr.addQuery('plan', this.planSysId);
+        gr.addQuery('task_state', '!=', 'cancelled');
+        gr.addQuery('task_state', '!=', 'not_applicable');
+        gr.query();
+
+        var total = 0;
+        var completed = 0;
+
+        while (gr.next()) {
+            total++;
+            if (gr.getValue('task_state') == 'complete' && gr.getValue('evidence_verified') == '1') {
+                completed++;
+            }
+        }
+
+        if (total === 0) {
+            return 0;
+        }
+
+        return Math.round((completed / total) * 100);
+    },
+
+    classifyStatus: function() {
+        var score = this.calculateScore();
+        var forecaster = new DayOneDelayForecaster(this.planSysId);
+        var forecast = forecaster.evaluateForecast();
+
+        var planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+        planGr.get(this.planSysId);
+        var threshold = parseInt(planGr.getValue('readiness_threshold'), 10) || 80;
+
+        // Check applicable tasks
+        var applicableGr = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+        applicableGr.addQuery('plan', this.planSysId);
+        applicableGr.addQuery('task_state', '!=', 'cancelled');
+        applicableGr.addQuery('task_state', '!=', 'not_applicable');
+        applicableGr.query();
+
+        if (applicableGr.getRowCount() === 0) {
+            return 'blocked';
+        }
+
+        // Check mandatory tasks
+        var mandatoryGr = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+        mandatoryGr.addQuery('plan', this.planSysId);
+        mandatoryGr.addQuery('mandatory', true);
+        mandatoryGr.addQuery('task_state', '!=', 'cancelled');
+        mandatoryGr.addQuery('task_state', '!=', 'not_applicable');
+        mandatoryGr.query();
+
+        var hasMandatory = false;
+        var allMandatoryComplete = true;
+
+        while (mandatoryGr.next()) {
+            hasMandatory = true;
+            if (mandatoryGr.getValue('task_state') != 'complete' || mandatoryGr.getValue('evidence_verified') != '1') {
+                allMandatoryComplete = false;
+            }
+        }
+
+        // Check for overdue tasks
+        var anyTaskOverdue = false;
+        var overdueGr = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+        overdueGr.addQuery('plan', this.planSysId);
+        overdueGr.addQuery('task_state', '!=', 'cancelled');
+        overdueGr.addQuery('task_state', '!=', 'not_applicable');
+        overdueGr.addQuery('task_state', '!=', 'complete');
+        overdueGr.addNotNullQuery('due_date');
+        overdueGr.addQuery('due_date', '<', new GlideDateTime().getValue());
+        overdueGr.query();
+        if (overdueGr.hasNext()) {
+            anyTaskOverdue = true;
+        }
+
+        // If no applicable mandatory tasks -> check score vs threshold
+        if (!hasMandatory) {
+            if (score >= threshold) {
+                return 'ready';
+            }
+            if (score < 50 || anyTaskOverdue) {
+                return 'at_risk';
+            }
+            return 'on_track';
+        }
+
+        // If score >= threshold and all mandatory complete+verified -> 'ready'
+        if (score >= threshold && allMandatoryComplete) {
+            return 'ready';
+        }
+
+        // Any mandatory task incomplete means cannot be 'ready'
+        // If any mandatory task blocked (forecast=delayed) -> 'blocked'
+        if (forecast == 'delayed') {
+            return 'blocked';
+        }
+
+        // If score < 50 or any task overdue -> 'at_risk'
+        if (score < 50 || anyTaskOverdue) {
+            return 'at_risk';
+        }
+
+        return 'on_track';
+    },
+
+    recalculate: function() {
+        var score = this.calculateScore();
+        var status = this.classifyStatus();
+
+        var planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+        if (planGr.get(this.planSysId)) {
+            planGr.setValue('readiness_score', score);
+            planGr.setValue('readiness_status', status);
+            planGr.update();
+        }
+
+        var forecaster = new DayOneDelayForecaster(this.planSysId);
+        var forecast = forecaster.evaluateForecast();
+
+        planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+        if (planGr.get(this.planSysId)) {
+            planGr.setValue('forecast_status', forecast);
+            planGr.update();
+        }
+    },
+
+    type: 'DayOneReadinessEngine'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:20:51</sys_created_on>
+        <sys_id>8fc8d550135341d39d56db84e71437bf</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>DayOneReadinessEngine</sys_name>
+        <sys_package display_value="DayOne ReadyOps AI" source="x_1919740_dayone_0">0df3b17a93b383d441a0f01bdd03d6c4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_update_name>sys_script_include_8fc8d550135341d39d56db84e71437bf</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:20:51</sys_updated_on>
+    </sys_script_include>
+</record_update>

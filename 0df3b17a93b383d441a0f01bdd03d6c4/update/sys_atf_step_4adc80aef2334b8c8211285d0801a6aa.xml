@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_atf_step">
+    <sys_atf_step action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <callable_outputs/>
+        <copied_from/>
+        <description/>
+        <display_name>Run Server Side Script</display_name>
+        <inputs/>
+        <mugshots_cache_json/>
+        <notes/>
+        <order>1</order>
+        <step_config display_value="Run Server Side Script">41de4a935332120028bc29cac2dc349a</step_config>
+        <sys_class_name>sys_atf_step</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:11:29</sys_created_on>
+        <sys_id>4adc80aef2334b8c8211285d0801a6aa</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Run Server Side Script</sys_name>
+        <sys_package display_value="DayOne ReadyOps AI" source="x_1919740_dayone_0">0df3b17a93b383d441a0f01bdd03d6c4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_update_name>sys_atf_step_4adc80aef2334b8c8211285d0801a6aa</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:11:29</sys_updated_on>
+        <table/>
+        <test display_value="T-13 Duplicate Task Prevention">bceb5ce6a2fd4ebaa8f25022ea64eda9</test>
+        <timeout/>
+        <warning_message/>
+    </sys_atf_step>
+    <sys_variable_value action="delete_multiple" query="document_key=4adc80aef2334b8c8211285d0801a6aa"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>4adc80aef2334b8c8211285d0801a6aa</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 04:46:43</sys_created_on>
+        <sys_id>dce8211e36944e8da8d7680ae5204d1e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 04:46:43</sys_updated_on>
+        <value>3.1</value>
+        <variable display_value="Jasmine version">42f2564b73031300440211d8faf6a777</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>4adc80aef2334b8c8211285d0801a6aa</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 04:46:43</sys_created_on>
+        <sys_id>fccd17fe8ecd4b8c92ef08226d2dd2ad</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 04:46:43</sys_updated_on>
+        <value>
+(function() {
+    // Create a template first
+    var tpl = new GlideRecord('x_1919740_dayone_0_task_template');
+    tpl.initialize();
+    tpl.setValue('template_name', 'ATF Duplicate Test Template');
+    tpl.setValue('applies_to_roles', '*');
+    tpl.setValue('applies_to_locations', '*');
+    tpl.setValue('department', 'hr');
+    tpl.setValue('mandatory', true);
+    tpl.setValue('est_days_to_complete', 3);
+    tpl.setValue('active', true);
+    tpl.setValue('description', 'Test template for duplicate prevention');
+    var tplId = tpl.insert();
+
+    var planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+    planGr.initialize();
+    planGr.setValue('employee_name', 'ATF Duplicate Test');
+    planGr.setValue('employee_id', 'ATF-013');
+    planGr.setValue('role', 'Tester');
+    planGr.setValue('location', 'Test Location');
+    planGr.setValue('state', 'active');
+    planGr.setValue('joining_date', '2025-06-01');
+    var planId = planGr.insert();
+
+    var gen = new DayOneTaskGenerator(planId);
+    gen.generateTasks();
+
+    var countGr = new GlideAggregate('x_1919740_dayone_0_onboarding_task');
+    countGr.addQuery('plan', planId);
+    countGr.addAggregate('COUNT');
+    countGr.query();
+    countGr.next();
+    var firstCount = parseInt(countGr.getAggregate('COUNT'), 10);
+
+    // Run again
+    gen.generateTasks();
+
+    countGr = new GlideAggregate('x_1919740_dayone_0_onboarding_task');
+    countGr.addQuery('plan', planId);
+    countGr.addAggregate('COUNT');
+    countGr.query();
+    countGr.next();
+    var secondCount = parseInt(countGr.getAggregate('COUNT'), 10);
+
+    if (firstCount !== secondCount) throw new Error('Duplicate tasks created: first=' + firstCount + ' second=' + secondCount);
+
+    // Cleanup template
+    tpl = new GlideRecord('x_1919740_dayone_0_task_template');
+    if (tpl.get(tplId)) tpl.deleteRecord();
+
+    gs.info('T-13 PASSED: No duplicates after running generator twice (' + firstCount + ' tasks)');
+})();
+</value>
+        <variable display_value="Test script">989d9e235324220002c6435723dc3484</variable>
+    </sys_variable_value>
+</record_update>

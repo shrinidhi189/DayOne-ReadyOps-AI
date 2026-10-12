@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_atf_test_suite_test">
+    <sys_atf_test_suite_test action="INSERT_OR_UPDATE">
+        <abort_on_failure>false</abort_on_failure>
+        <order>9</order>
+        <sys_class_name>sys_atf_test_suite_test</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:12:46</sys_created_on>
+        <sys_id>c378576c39824128a47263d8d3697719</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>681e3a53b2d0490da79fa4cea995e251</sys_name>
+        <sys_package display_value="DayOne ReadyOps AI" source="x_1919740_dayone_0">0df3b17a93b383d441a0f01bdd03d6c4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_update_name>sys_atf_test_suite_test_c378576c39824128a47263d8d3697719</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:12:46</sys_updated_on>
+        <test display_value="T-09 Gate Passes When All Mandatory Verified">681e3a53b2d0490da79fa4cea995e251</test>
+        <test_suite display_value="DayOne ReadyOps AI — Readiness Test Suite">67fcf4c2e5334f7897cd4eb09db5dd40</test_suite>
+    </sys_atf_test_suite_test>
+</record_update>

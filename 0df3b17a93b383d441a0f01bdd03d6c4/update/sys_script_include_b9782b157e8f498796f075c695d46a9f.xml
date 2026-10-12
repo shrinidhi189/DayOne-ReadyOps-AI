@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1919740_dayone_0.DayOneDelayForecaster</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Evaluates delay forecasts by comparing task estimated remaining days against days until joining date.</description>
+        <mobile_callable>false</mobile_callable>
+        <name>DayOneDelayForecaster</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var DayOneDelayForecaster = Class.create();
+DayOneDelayForecaster.prototype = {
+    initialize: function(planSysId) {
+        this.planSysId = planSysId;
+    },
+
+    evaluateForecast: function() {
+        var planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+        if (!planGr.get(this.planSysId)) {
+            return 'no_joining_date';
+        }
+
+        var joiningDateStr = planGr.getValue('joining_date');
+        if (!joiningDateStr) {
+            return 'no_joining_date';
+        }
+
+        var joiningDate = new GlideDateTime(joiningDateStr);
+        var now = new GlideDateTime();
+        var daysRemaining = GlideDateTime.subtract(now, joiningDate).getDayPart();
+
+        // Query open/in_progress tasks
+        var gr = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+        gr.addQuery('plan', this.planSysId);
+        var stateQuery = gr.addQuery('task_state', 'open');
+        stateQuery.addOrCondition('task_state', 'in_progress');
+        gr.query();
+
+        var anyMandatoryDelayed = false;
+        var anyTaskDelayed = false;
+
+        while (gr.next()) {
+            var estDays = parseInt(gr.getValue('est_remaining_days'), 10) || 0;
+            var isMandatory = gr.getValue('mandatory') == '1';
+
+            if (estDays > daysRemaining) {
+                if (isMandatory) {
+                    anyMandatoryDelayed = true;
+                }
+                anyTaskDelayed = true;
+            }
+        }
+
+        // Rule-based forecast
+        if (anyMandatoryDelayed) {
+            gs.info('DayOneDelayForecaster: Rule-based forecast - delayed (mandatory task exceeds remaining days)');
+            return 'delayed';
+        }
+
+        if (anyTaskDelayed) {
+            gs.info('DayOneDelayForecaster: Rule-based forecast - delay_forecast (task exceeds remaining days)');
+            return 'delay_forecast';
+        }
+
+        gs.info('DayOneDelayForecaster: Rule-based forecast - on_track');
+        return 'on_track';
+    },
+
+    type: 'DayOneDelayForecaster'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:20:55</sys_created_on>
+        <sys_id>b9782b157e8f498796f075c695d46a9f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>DayOneDelayForecaster</sys_name>
+        <sys_package display_value="DayOne ReadyOps AI" source="x_1919740_dayone_0">0df3b17a93b383d441a0f01bdd03d6c4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_update_name>sys_script_include_b9782b157e8f498796f075c695d46a9f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:20:55</sys_updated_on>
+    </sys_script_include>
+</record_update>

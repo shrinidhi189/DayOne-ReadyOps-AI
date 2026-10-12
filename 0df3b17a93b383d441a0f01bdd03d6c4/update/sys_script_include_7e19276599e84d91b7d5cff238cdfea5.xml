@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1919740_dayone_0.DayOneGateValidator</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Validates readiness gate conditions including task completion, evidence verification, and score thresholds.</description>
+        <mobile_callable>false</mobile_callable>
+        <name>DayOneGateValidator</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var DayOneGateValidator = Class.create();
+DayOneGateValidator.prototype = {
+    initialize: function(planSysId) {
+        this.planSysId = planSysId;
+    },
+
+    validateGate: function() {
+        var reasons = [];
+        var passed = true;
+
+        var planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+        if (!planGr.get(this.planSysId)) {
+            reasons.push('Plan not found');
+            this._writeAudit('gate_blocked', reasons.join('; '));
+            return { passed: false, reasons: reasons };
+        }
+
+        var threshold = parseInt(planGr.getValue('readiness_threshold'), 10) || 80;
+
+        // (1) At least one applicable task
+        var applicableGr = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+        applicableGr.addQuery('plan', this.planSysId);
+        applicableGr.addQuery('task_state', '!=', 'cancelled');
+        applicableGr.addQuery('task_state', '!=', 'not_applicable');
+        applicableGr.query();
+
+        if (applicableGr.getRowCount() === 0) {
+            passed = false;
+            reasons.push('No applicable tasks found');
+        }
+
+        // (2) At least one mandatory applicable task
+        var mandatoryGr = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+        mandatoryGr.addQuery('plan', this.planSysId);
+        mandatoryGr.addQuery('mandatory', true);
+        mandatoryGr.addQuery('task_state', '!=', 'cancelled');
+        mandatoryGr.addQuery('task_state', '!=', 'not_applicable');
+        mandatoryGr.query();
+
+        if (mandatoryGr.getRowCount() === 0) {
+            passed = false;
+            reasons.push('No mandatory applicable tasks found');
+        }
+
+        // (3) All mandatory applicable tasks are complete AND evidence_verified
+        var incompleteMandatory = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+        incompleteMandatory.addQuery('plan', this.planSysId);
+        incompleteMandatory.addQuery('mandatory', true);
+        incompleteMandatory.addQuery('task_state', '!=', 'cancelled');
+        incompleteMandatory.addQuery('task_state', '!=', 'not_applicable');
+        var incompleteQuery = incompleteMandatory.addQuery('task_state', '!=', 'complete');
+        incompleteQuery.addOrCondition('evidence_verified', '!=', '1');
+        incompleteMandatory.query();
+
+        if (incompleteMandatory.hasNext()) {
+            passed = false;
+            reasons.push('Not all mandatory tasks are complete and evidence verified');
+        }
+
+        // (4) Readiness score >= readiness_threshold
+        var engine = new DayOneReadinessEngine(this.planSysId);
+        var score = engine.calculateScore();
+
+        if (score < threshold) {
+            passed = false;
+            reasons.push('Readiness score (' + score + ') is below threshold (' + threshold + ')');
+        }
+
+        // Write audit log entry
+        if (passed) {
+            this._writeAudit('gate_passed', 'All gate checks passed. Score: ' + score);
+        } else {
+            this._writeAudit('gate_blocked', reasons.join('; '));
+        }
+
+        return { passed: passed, reasons: reasons };
+    },
+
+    _writeAudit: function(eventType, details) {
+        var auditGr = new GlideRecord('x_1919740_dayone_0_readiness_audit');
+        auditGr.initialize();
+        auditGr.setValue('plan', this.planSysId);
+        auditGr.setValue('event_type', eventType == 'gate_passed' ? 'gate_passed' : (eventType == 'gate_blocked' ? 'gate_blocked' : 'gate_checked'));
+        auditGr.setValue('performed_by', gs.getUserID());
+        auditGr.setValue('details', details);
+        auditGr.insert();
+    },
+
+    type: 'DayOneGateValidator'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:20:49</sys_created_on>
+        <sys_id>7e19276599e84d91b7d5cff238cdfea5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>DayOneGateValidator</sys_name>
+        <sys_package display_value="DayOne ReadyOps AI" source="x_1919740_dayone_0">0df3b17a93b383d441a0f01bdd03d6c4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_update_name>sys_script_include_7e19276599e84d91b7d5cff238cdfea5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:20:49</sys_updated_on>
+    </sys_script_include>
+</record_update>

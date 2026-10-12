@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_atf_test_suite_test">
+    <sys_atf_test_suite_test action="INSERT_OR_UPDATE">
+        <abort_on_failure>false</abort_on_failure>
+        <order>8</order>
+        <sys_class_name>sys_atf_test_suite_test</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:12:39</sys_created_on>
+        <sys_id>0c87d80b1de74bbdb183a9375434f7d9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>f30d93a9e0b043cd8ae5ffb337dc20c1</sys_name>
+        <sys_package display_value="DayOne ReadyOps AI" source="x_1919740_dayone_0">0df3b17a93b383d441a0f01bdd03d6c4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_update_name>sys_atf_test_suite_test_0c87d80b1de74bbdb183a9375434f7d9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:12:39</sys_updated_on>
+        <test display_value="T-08 Reopened Task Triggers Recalculation">f30d93a9e0b043cd8ae5ffb337dc20c1</test>
+        <test_suite display_value="DayOne ReadyOps AI — Readiness Test Suite">67fcf4c2e5334f7897cd4eb09db5dd40</test_suite>
+    </sys_atf_test_suite_test>
+</record_update>

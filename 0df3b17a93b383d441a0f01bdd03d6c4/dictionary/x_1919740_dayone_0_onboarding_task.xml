@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="73e3347c5ed04dc199abc23ee8e1708e" label="Onboarding Task" name="x_1919740_dayone_0_onboarding_task" type="collection">
+        <element default="0" label="Est. Remaining Days" name="est_remaining_days" type="integer"/>
+        <element label="Mandatory" name="mandatory" type="boolean"/>
+        <element default="open" label="Task State" name="task_state" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Not Applicable" sequence="5" value="not_applicable"/>
+                <element inactive_on_update="false" label="Open" sequence="1" value="open"/>
+                <element inactive_on_update="false" label="Complete" sequence="3" value="complete"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="4" value="cancelled"/>
+                <element inactive_on_update="false" label="In Progress" sequence="2" value="in_progress"/>
+            </choice>
+        </element>
+        <element label="Evidence Verified By" name="evidence_verified_by" reference="sys_user" type="reference"/>
+        <element label="Evidence Verified On" name="evidence_verified_on" type="glide_date_time"/>
+        <element label="Due Date" name="due_date" type="glide_date"/>
+        <element display="true" label="Task Name" mandatory="true" max_length="200" name="task_name" type="string"/>
+        <element label="Description" max_length="4000" name="description" type="multi_two_lines"/>
+        <element label="Assigned To" name="assigned_to" reference="sys_user" type="reference"/>
+        <element label="Evidence Notes" max_length="4000" name="evidence_notes" type="multi_two_lines"/>
+        <element label="Evidence Verified" name="evidence_verified" type="boolean"/>
+        <element label="Department" name="department" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="HR" sequence="1" value="hr"/>
+                <element inactive_on_update="false" label="Facilities" sequence="4" value="facilities"/>
+                <element inactive_on_update="false" label="Hiring Manager" sequence="6" value="hiring_manager"/>
+                <element inactive_on_update="false" label="IT" sequence="2" value="it"/>
+                <element inactive_on_update="false" label="Security" sequence="3" value="security"/>
+                <element inactive_on_update="false" label="Finance" sequence="5" value="finance"/>
+            </choice>
+        </element>
+        <element label="Onboarding Plan" mandatory="true" name="plan" reference="x_1919740_dayone_0_onboarding_plan" type="reference"/>
+        <index name="index">
+            <element name="assigned_to"/>
+        </index>
+        <index name="index2">
+            <element name="evidence_verified_by"/>
+        </index>
+        <index name="index3">
+            <element name="plan"/>
+        </index>
+    </element>
+</database>

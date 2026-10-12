@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_hub_flow">
+    <sys_hub_flow action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <acls/>
+        <active>false</active>
+        <allow_high_security_roles>false</allow_high_security_roles>
+        <annotation/>
+        <attributes/>
+        <authored_on_release_version/>
+        <callable_by_client_api>false</callable_by_client_api>
+        <category/>
+        <compiler_build/>
+        <copied_from/>
+        <copied_from_name/>
+        <description>Initiates recovery actions when an onboarding plan is blocked.</description>
+        <display_name_after_preview/>
+        <flow_priority>MEDIUM</flow_priority>
+        <generation_source>fluent</generation_source>
+        <internal_name/>
+        <label_cache>[{"name":"Updated_1.current.number","label":"Trigger - Record Updated➛x_1919740_dayone_0_onboarding_plan Record➛Number","type":"string","base_type":"string","usedInstances":{"6dee8ecf-5f20-464b-b752-8dae0bdf2ede":["ah_subject"],"8283a5d3-4e1b-4a75-8901-5bf4770b4054":["log_message"]},"attributes":{}},{"name":"Updated_1.current","label":"Trigger - Record Updated➛x_1919740_dayone_0_onboarding_plan Record","type":"reference","base_type":"reference","usedInstances":{"6dee8ecf-5f20-464b-b752-8dae0bdf2ede":["record"]},"attributes":{}},{"name":"Updated_1.current.coordinator.email","label":"Trigger - Record Updated➛x_1919740_dayone_0_onboarding_plan Record➛Coordinator➛Email","type":"string","base_type":"string","usedInstances":{"6dee8ecf-5f20-464b-b752-8dae0bdf2ede":["ah_to"]},"attributes":{}},{"name":"Updated_1.current.coordinator","label":"Trigger - Record Updated➛x_1919740_dayone_0_onboarding_plan Record➛Coordinator","type":"reference","base_type":"reference","usedInstances":{"97fe3a90-adc4-46f4-9498-e3ac77a6870d":["field_values"]},"attributes":{}}]</label_cache>
+        <latest_snapshot/>
+        <master_snapshot/>
+        <master_snapshot_digest/>
+        <name>Recovery Workflow</name>
+        <natlang/>
+        <outputs/>
+        <pre_compiled>false</pre_compiled>
+        <remote_trigger_id/>
+        <run_as>system</run_as>
+        <run_with_roles/>
+        <sc_callable>false</sc_callable>
+        <show_draft_actions>false</show_draft_actions>
+        <show_triggered_flows>false</show_triggered_flows>
+        <status>draft</status>
+        <substatus/>
+        <sys_class_name>sys_hub_flow</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:20:44</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>6a6c6c66e22541e0823801a458bc3a5b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Recovery Workflow</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="DayOne ReadyOps AI" source="x_1919740_dayone_0">0df3b17a93b383d441a0f01bdd03d6c4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_update_name>sys_hub_flow_6a6c6c66e22541e0823801a458bc3a5b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:20:44</sys_updated_on>
+        <type>flow</type>
+        <updation_source/>
+        <version>2</version>
+        <version_record/>
+    </sys_hub_flow>
+    <sys_translated_text action="delete_multiple" query="documentkey=6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_variable_value action="delete_multiple" query="document_key=6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_hub_flow_stage action="delete_multiple" query="flow=6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_flow_cat_variable_model action="delete_multiple" query="id=6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_hub_flow_input action="delete_multiple" query="model=6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_hub_flow_output action="delete_multiple" query="model=6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_hub_trigger_instance_v2 action="delete_multiple" query="flow=6a6c6c66e22541e0823801a458bc3a5b^sys_idNOT IN1316a83094e04e9d9457bc08a1b251a8"/>
+    <sys_hub_trigger_instance_v2 action="INSERT_OR_UPDATE">
+        <comment/>
+        <display_text/>
+        <flow display_value="Recovery Workflow">6a6c6c66e22541e0823801a458bc3a5b</flow>
+        <generation_source/>
+        <name>Updated</name>
+        <published_version/>
+        <remote_sys_id/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:20:45</sys_created_on>
+        <sys_id>1316a83094e04e9d9457bc08a1b251a8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:20:45</sys_updated_on>
+        <trigger_definition display_value="Updated">bb695e60c31322002841b63b12d3aea5</trigger_definition>
+        <trigger_inputs>H4sIAAAAAAAAA71X22obMRD9FaGnFlxIoFBq6ENvAUMv0KTtQwlivJpdi8gjV5q1swT/e9Fekt31JnbjTZ6MR9LMmTNnpNk/N5K9yTL0MwoMlOB5EWZaTqWcSAtztHIqL2BuUU6kIUZPYC+KFcqp5GhWBMu4pnGFpJG4OposnEnwiwksp38uJ3IJpIGdL+SUfY4T6bxGL6enJycTWbqo/cmJXIPN4/9rdfr29O2b1ydKQ+EI1YlyNHfgtaFMrSxQjGvCykLx6xFnzgzaOtOQeLPi9wmbNcppCjZgzMFY7ZGqDFbgYYkcQd9IHmCgl0WXvO12cgjTP3ISvxdI4mdAL0r6dmjPrNGobLV2OO11UgO8+5zUZoGk8oC+cdwUYZfiwwksfbSy3E9oJ7eH4D1IGDB7M88ZQ3QNeh3Zjhii9OT2f2txjiEYF3+ZDWW7FalY31ONG5k2DJbHoeJqItMvdcDvZAsRo6bOV/nM7jY2KOKB2RKyuhLpOVpMOGZXk57+DO1/X00IEXRliJnfwiBH6hAo3xy9elokc8eLdvgm8gfHiw4JQPo+OOFIPP/dLeFWDutuGr1+6VqPv3Ru1XY/oAMkPF6PpNZtxIyObwugYkcE0bchAVSIxBHjNY8ou9R5zLzLSd8Xt7tjLLVDcvVw2Lsd4oXGFHLLL59R3hGGMtRWdhtyX98Da0+j8jtcw/obT9PfSXy+5ihaLcoHPBwv7xJEr+CORJJ7j8Tl1YZNTG5ijib1aNmNbos2hGZ0eS6dOVJNxi2tNVB7MuuZn0ZhXUR7FTGO4D460oarF7WvsWYpjDTrJa1YDeEeQRvCEFRg4Dy8m1uXXOFAq+/fOUJZ2ikPoB5irVuHDRAHxU6B1qrl7rYFl06j/dRis66RMrTKOchti2vlqDXU5wFVqwzR36Mm+9FGyaE30/nyvYzj8og3SPyYcungkGhSUROAWswLwQsUqbPWbQxlJY4xrzJysSh9MJ+cIMfCPwucx31Z7Q6MVfV6TdYxPuG42MO0T6jjPa4X1a7jxZ+T+ZujShZAWfVaNmo4c14gJAtRbRHVllG7Iel9MCVjusc1+mInoWgU+UoDjxkL7AaKsNPYJi0bqp4NbBFbiyopPEfrNFdyYA+MWdHqmpr7Xtt0reP3zQCgIVFvt5f/ACoN5PtUEwAA</trigger_inputs>
+        <trigger_outputs/>
+        <trigger_type>record_update</trigger_type>
+        <updation_source/>
+    </sys_hub_trigger_instance_v2>
+    <sys_hub_action_instance_v2 action="delete_multiple" query="flow=6a6c6c66e22541e0823801a458bc3a5b^sys_idNOT IN6dee8ecf5f20464bb7528dae0bdf2ede,8283a5d34e1b4a7589015bf4770b4054,97fe3a90adc446f49498e3ac77a6870d"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Send Email">c1806bf4a70323008299b39f087901cb</action_type>
+        <action_type_parent display_value="">c1806bf4a70323008299b39f087901cb</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot/>
+        <display_text/>
+        <flow display_value="Recovery Workflow">6a6c6c66e22541e0823801a458bc3a5b</flow>
+        <generation_source/>
+        <order>1</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:20:45</sys_created_on>
+        <sys_id>6dee8ecf5f20464bb7528dae0bdf2ede</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:20:45</sys_updated_on>
+        <ui_id>6dee8ecf-5f20-464b-b752-8dae0bdf2ede</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAAA82TTU/DMAyG/4qV81RtEhJiN75OII0LXBCK3MSsYfkojrtRTf3vqENiX4AKJ26xFdvP+zp5XKuIgdRUCZae9CYYqSX6pk++6cnZ5Oz0ZKwttimSHusUy4RsXZzr2mNUI2Vdrj22D7+pyYZdLedG3JLU9Bl9ppGqkTGQEKvpWklbH2B13eiTdoVCHJAXmgI6v0UWbugQ6SM3eGSZkieMe/Ow0rkpX8jIjjuzT1lw5zHCen1fWxSyelKYhpmiFLEJJXHXgctwcTu7vLm+Orbs740Gi8rCLs4PNZXJtjuCziNsVwX9qqDCDCVRhGeP8zlZ6GOfzKI/RgtMr41jyuBCIOtQCFCEorgUC7jzhJmAaeloBVLRR9O+UHBBYBIzbeABzabk2Jz/ATXY6EqC37OZySS2Oy5/sd2uO9b93bXBJDaZJlAU7ezh3iX9zFOYlHq/URIXmx82kPCbwt8/06d3Y10VM5oEAAA=</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=6dee8ecf5f20464bb7528dae0bdf2ede"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Log">5bc1bcc6531003003bf1d9109ec587d4</action_type>
+        <action_type_parent display_value="">5bc1bcc6531003003bf1d9109ec587d4</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot/>
+        <display_text/>
+        <flow display_value="Recovery Workflow">6a6c6c66e22541e0823801a458bc3a5b</flow>
+        <generation_source/>
+        <order>3</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:20:45</sys_created_on>
+        <sys_id>8283a5d34e1b4a7589015bf4770b4054</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:20:45</sys_updated_on>
+        <ui_id>8283a5d3-4e1b-4a75-8901-5bf4770b4054</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAAA62PsYrDMBBEf0VsbQLXussvBHLNEcxGGuuE15JYyTbG6N9DuoQ0V1z7GObN/BwUeQb1JMkPghVCHa0sy5NtrJE6cqFk4f37nRarIdezrWEF9SNLQUeZlWdUKPUH1T0/8/Y3BQtqrXuTzSiFPV50F9i0QnezJZ1GSZupGryHwpkxqblLshOcycLRHMc1O65ww9fJLqqI9RSX+Q5t7XPzf1b/+XipGqKn1m4PRVbowGcBAAA=</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=8283a5d34e1b4a7589015bf4770b4054"/>
+    <sys_hub_action_instance_v2 action="INSERT_OR_UPDATE">
+        <action_type display_value="Create Task">2b3a6335531003003bf1d9109ec58759</action_type>
+        <action_type_parent display_value="">2b3a6335531003003bf1d9109ec58759</action_type_parent>
+        <attributes/>
+        <comment/>
+        <compiled_snapshot/>
+        <display_text/>
+        <flow display_value="Recovery Workflow">6a6c6c66e22541e0823801a458bc3a5b</flow>
+        <generation_source/>
+        <order>2</order>
+        <parent_ui_id/>
+        <sys_class_name>sys_hub_action_instance_v2</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:20:45</sys_created_on>
+        <sys_id>97fe3a90adc446f49498e3ac77a6870d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:20:45</sys_updated_on>
+        <ui_id>97fe3a90-adc4-46f4-9498-e3ac77a6870d</ui_id>
+        <updation_source/>
+        <values>H4sIAAAAAAAAA+WSQWvDMAyF/4rxOQS2YyGHHvYDVtguYwlK/JKaupYnOykh5L+PNN3Wbpfed9ST9D4e0tukPR2hNzpRPFSJaged6YFc/yXqTBsbg6Px9VaNjdiQtk2yA/SmJReR6UBCRySI3kw6jWGdrx2qM2ees2/iiWz6YV32b1EX8W5SzexA/gbTWjhTnSnxKlrcs6TKYPW27IsdGh4go6JmqZXgo7cCo1oWVTtuDjCKfc0kxvpOBUe+vDbY+t9ttaeoasCr1lHXwailXq1ytcNgcVLkjRJEdgPW3rJtY+wR85JitJ2HqRIX0/QSDCWY6iFvehH4lDfMC44SyzyXQSyLTWPxWD49/z3cv8h8/1viGBwlrL+h5/n9E0QR8HMOAwAA</values>
+    </sys_hub_action_instance_v2>
+    <sys_hub_alias_mapping action="delete_multiple" query="source_id=97fe3a90adc446f49498e3ac77a6870d"/>
+    <sys_hub_sub_flow_instance_v2 action="delete_multiple" query="flow=6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_hub_flow_logic_instance_v2 action="delete_multiple" query="flow=6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_hub_pill_compound action="delete_multiple" query="attached_to=6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_hub_flow_variable action="delete_multiple" query="model=6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_input_6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_choice action="delete_multiple" query="name=var__m_sys_hub_flow_output_6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_flow_trigger_plan action="delete_multiple" query="plan_id=6a6c6c66e22541e0823801a458bc3a5b"/>
+    <sys_flow_subflow_plan action="delete_multiple" query="plan_id=6a6c6c66e22541e0823801a458bc3a5b"/>
+</record_update>

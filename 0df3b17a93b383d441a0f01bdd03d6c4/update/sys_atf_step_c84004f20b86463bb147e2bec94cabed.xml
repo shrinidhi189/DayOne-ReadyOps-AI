@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_atf_step">
+    <sys_atf_step action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <callable_outputs/>
+        <copied_from/>
+        <description/>
+        <display_name>Run Server Side Script</display_name>
+        <inputs/>
+        <mugshots_cache_json/>
+        <notes/>
+        <order>1</order>
+        <step_config display_value="Run Server Side Script">41de4a935332120028bc29cac2dc349a</step_config>
+        <sys_class_name>sys_atf_step</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 02:12:11</sys_created_on>
+        <sys_id>c84004f20b86463bb147e2bec94cabed</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Run Server Side Script</sys_name>
+        <sys_package display_value="DayOne ReadyOps AI" source="x_1919740_dayone_0">0df3b17a93b383d441a0f01bdd03d6c4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="DayOne ReadyOps AI">0df3b17a93b383d441a0f01bdd03d6c4</sys_scope>
+        <sys_update_name>sys_atf_step_c84004f20b86463bb147e2bec94cabed</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 02:12:11</sys_updated_on>
+        <table/>
+        <test display_value="T-11 Optional Tasks Do Not Block When Mandatory Met">830ae2074edc4ff297cf1d02cb494194</test>
+        <timeout/>
+        <warning_message/>
+    </sys_atf_step>
+    <sys_variable_value action="delete_multiple" query="document_key=c84004f20b86463bb147e2bec94cabed"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>c84004f20b86463bb147e2bec94cabed</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 04:47:17</sys_created_on>
+        <sys_id>34883a64a07a43c4828287cf06c0d776</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 04:47:17</sys_updated_on>
+        <value>
+(function() {
+    var planGr = new GlideRecord('x_1919740_dayone_0_onboarding_plan');
+    planGr.initialize();
+    planGr.setValue('employee_name', 'ATF Optional Tasks');
+    planGr.setValue('employee_id', 'ATF-011');
+    planGr.setValue('state', 'active');
+    planGr.setValue('readiness_threshold', 80);
+    var planId = planGr.insert();
+
+    // 3 mandatory tasks - all complete + verified
+    for (var i = 1; i &lt;= 3; i++) {
+        var t = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+        t.initialize();
+        t.setValue('plan', planId);
+        t.setValue('task_name', 'Mandatory Task ' + i);
+        t.setValue('mandatory', true);
+        t.setValue('task_state', 'complete');
+        t.setValue('evidence_verified', true);
+        t.setValue('department', 'hr');
+        t.insert();
+    }
+
+    // 1 optional complete
+    var opt1 = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+    opt1.initialize();
+    opt1.setValue('plan', planId);
+    opt1.setValue('task_name', 'Optional Complete');
+    opt1.setValue('mandatory', false);
+    opt1.setValue('task_state', 'complete');
+    opt1.setValue('evidence_verified', true);
+    opt1.setValue('department', 'facilities');
+    opt1.insert();
+
+    // 1 optional incomplete
+    var opt2 = new GlideRecord('x_1919740_dayone_0_onboarding_task');
+    opt2.initialize();
+    opt2.setValue('plan', planId);
+    opt2.setValue('task_name', 'Optional Incomplete');
+    opt2.setValue('mandatory', false);
+    opt2.setValue('task_state', 'open');
+    opt2.setValue('evidence_verified', false);
+    opt2.setValue('department', 'finance');
+    opt2.insert();
+
+    var engine = new DayOneReadinessEngine(planId);
+    var score = engine.calculateScore();
+    // 4 verified out of 5 applicable = 80%
+    if (score !== 80) throw new Error('Score should be 80, got ' + score);
+
+    var gate = new DayOneGateValidator(planId);
+    var result = gate.validateGate();
+    if (!result.passed) throw new Error('Gate should pass (score 80 &gt;= threshold 80, all mandatory done) but failed: ' + result.reasons.join('; '));
+    gs.info('T-11 PASSED: Optional incomplete tasks do not block readiness');
+})();
+</value>
+        <variable display_value="Test script">989d9e235324220002c6435723dc3484</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>sys_atf_step</document>
+        <document_key>c84004f20b86463bb147e2bec94cabed</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-10-12 04:47:17</sys_created_on>
+        <sys_id>5f2ebbb772034393a1d61b82cce50928</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-10-12 04:47:17</sys_updated_on>
+        <value>3.1</value>
+        <variable display_value="Jasmine version">42f2564b73031300440211d8faf6a777</variable>
+    </sys_variable_value>
+</record_update>
